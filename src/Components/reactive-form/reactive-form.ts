@@ -16,11 +16,35 @@ import {
 export class ReactiveForm {
   form1: FormGroup<any> = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    age: new FormControl('', [Validators.required]),
+    age: new FormControl('', [Validators.required, Validators.max(80)]),
     gender: new FormControl('', [Validators.required]),
   });
 
+  nestedForm: FormGroup<any> = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    age: new FormControl('', [Validators.required, Validators.max(80)]),
+    gender: new FormControl('', [Validators.required]),
+    address: new FormGroup({
+      city: new FormControl(''),
+      country: new FormControl('')
+    })
+  })
+
   submitForm1() {
     console.log(this.form1.value);
+  }
+
+  submitNestedForm() {
+    console.log(this.nestedForm.value);
+  }
+
+  updateUserData() {
+    this.nestedForm.patchValue({
+      name: 'Reetika',
+      address: {
+        city: "Prayagraj",
+        country: "India"
+      }
+    })
   }
 }
