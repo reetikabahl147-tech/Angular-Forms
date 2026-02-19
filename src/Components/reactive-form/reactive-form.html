@@ -60,3 +60,40 @@
     Submit
   </button>
 </form>
+
+<h1>Dynamic Form using form group</h1>
+<form [formGroup]="dynamicForm" (ngSubmit)="submitDynamicForm()" style="
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  ">
+  <label>Name : </label>
+  <input type="text" formControlName="name" />
+  <br />
+  <label>Age : </label>
+  <input type="number" formControlName="age" />
+  <br />
+  <label>Gender : </label>
+  <div>
+    <label>Male</label>
+    <input type="radio" value="male" formControlName="gender" />
+    <label>Female</label>
+    <input type="radio" value="female" formControlName="gender" />
+  </div>
+  <br />
+  <div formArrayName="address">
+    <label>Address : </label>
+    <br>
+    @for(address of addressLines.controls; track $index ;let i=$index) {
+      <input style="width: 100%;" [placeholder]="'Address Line -' + (i + 1)" type="text" [formControlName]="i" />
+      @if(i=== addressLines.controls.length - 1) {
+        <br/>
+        <button style="background: lightblue; float:right" (click)="addNewAddressLine()"> Add +</button>
+      }
+    }
+  </div>
+  <br/>
+  <button style="background: green; font-size: 18px;padding: 5px;" type="submit" [disabled]="dynamicForm.invalid">
+    Submit
+  </button>
+</form>

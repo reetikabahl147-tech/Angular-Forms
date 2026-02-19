@@ -30,12 +30,31 @@ export class ReactiveForm {
     })
   })
 
+  dynamicForm: FormGroup<any> = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    age: new FormControl('', [Validators.required, Validators.max(80)]),
+    gender: new FormControl('', [Validators.required]),
+    address: new FormArray([new FormControl('')])
+  })
+
   submitForm1() {
     console.log(this.form1.value);
   }
 
   submitNestedForm() {
     console.log(this.nestedForm.value);
+  }
+
+  submitDynamicForm() {
+    console.log(this.dynamicForm.value);
+  }
+
+  get addressLines() {
+    return this.dynamicForm.get('address') as FormArray;
+  }
+
+  addNewAddressLine() {
+    this.addressLines.push(new FormControl(''));
   }
 
   updateUserData() {
